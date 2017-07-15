@@ -4,22 +4,25 @@ import './App.css';
 
 class App extends Component {
   state = {
-    users: []
+    posts: []
   }
 
   componentDidMount() {
-    fetch('/users')
+    fetch('/posts')
       .then(res => res.json())
-      .then(users => this.setState({ users }));
+      .then(posts => this.setState({ posts }));
   }
 
   render() {
     return (
       <div className="App">
-        <h1>Users</h1>
-        {this.state.users.map(user =>
-          <div key={user.id}>{user.username}</div>
-        )}
+        <h1>Last posts:</h1>
+        { this.state.posts.map(post =>
+          <div key={ post.id }>
+            <h4>{ post.title }</h4>
+            <p>{ post.body }</p>
+          </div>
+        ) }
       </div>
     );
   }
