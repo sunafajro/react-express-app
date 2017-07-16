@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-//import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
 
-class App extends Component {
+export default class Home extends Component {
   state = {
     posts: []
   }
@@ -15,7 +13,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="Home">
         <h1>Last posts:</h1>
         { this.state.posts.map(post =>
           <div key={ post.id }>
@@ -24,8 +22,6 @@ class App extends Component {
           </div>
         ) }
       </div>
-    );
+    )
   }
 }
-
-export default App;
