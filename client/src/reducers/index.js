@@ -1,28 +1,40 @@
 import { combineReducers } from 'redux'
 import {
-  GET_POSTS, GET_USERS
+  POSTS_HAS_ERRORED, POSTS_IS_LOADING, POSTS_FETCH_DATA_SUCCESS
 } from '../actions'
 
-const postsReducer = (state = { }, action) => {
+function postsHasErrored(state = false, action) {
   switch (action.type) {
-    case GET_POSTS:
-      return action.something
+    case POSTS_HAS_ERRORED:
+      return action.hasErrored;
+
     default:
-      return state
+      return state;
   }
 }
 
-const usersReducer = (state = { }, action) => {
+function postsIsLoading(state = false, action) {
   switch (action.type) {
-    case GET_USERS:
-      return action.something
+    case POSTS_IS_LOADING:
+      return action.isLoading;
+
     default:
-      return state
+      return state;
   }
 }
 
-const rootReducer = combineReducers({
-  postsReducer
-})
+function posts(state = [], action) {
+  switch (action.type) {
+    case POSTS_FETCH_DATA_SUCCESS:
+      return action.posts;
 
-export default rootReducer
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({
+  postsHasErrored,
+  postsIsLoading,
+  posts
+});

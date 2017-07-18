@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Provider } from 'react-redux'
 //import logo from './logo.svg';
 //import './App.css';
 import Home from '../components/Home';
@@ -13,13 +12,12 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={store}>
         <BrowserRouter>
           <div>
             <nav>
-              <div class="nav-wrapper">
-                <a href="#" class="brand-logo">Logo</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <div className="nav-wrapper">
+                <a href="/" className="brand-logo">Logo</a>
+                <ul id="nav-mobile" className="right hide-on-med-and-down">
                   <li><Link to="/">Home</Link></li>
                   <li><Link to="/admin">Admin</Link></li>
                   <li><Link to="/users">Users</Link></li>
@@ -28,13 +26,12 @@ class App extends Component {
               </div>
             </nav>
     
-            <Route exact path='/' component={ Home } />
+            <Route exact path='/' component={ Home } store={this.props.store} />
             <Route path='/admin' component={ Admin } />
             <Route path='/users' component={ Users } />
             <Route path='/login' component={ Login } />
           </div>
         </BrowserRouter>
-      </Provider>
     );
   }
 }
