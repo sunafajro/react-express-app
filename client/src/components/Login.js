@@ -1,59 +1,55 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Form, Icon, Input, Button, Checkbox } from 'antd';
 
-export default class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: ''
-    };
+const FormItem = Form.Item;
 
-    this.changeUsernameValue = this.changeUsernameValue.bind(this);
-    this.changePasswordValue = this.changePasswordValue.bind(this);
-  }
+class NormalLoginForm extends Component {
 
-  changeUsernameValue (event) {
-    const username = event.target.value;
-    this.setState({ username: username });
-  }
-
-  changePasswordValue (event) {
-    const password = event.target.value;
-    this.setState({ password: password });
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+      }
+    });
   }
 
   render() {
+    const { getFieldDecorator } = this.props.form;
     return (
-      <div className="row">
-        <div className="col s6">
-          <div className="row">
-            <div className='input-field col s12 offset-s3'>
-                <input
-                className="form-control"
-                type="text"
-                name="username"
-                value={ this.state.username } 
-                onChange={ this.changeUsernameValue } />
-            </div>
-            <div className='input-field col s12 offset-s3'>
-                <input
-                className="form-control"
-                type="password"
-                name="password"
-                value={ this.state.password }
-                onChange={ this.changePasswordValue }
-                />
-            </div>
-            <div className="col s12 offset-s3">
-                <input 
-                className="btn waves-effect waves-light"
-                type="submit" 
-                name="btn" 
-                value="Send" />
-            </div>
-          </div>
-        </div>
-      </div>
-    )
+      <Form onSubmit={this.handleSubmit} className="login-form">
+        <FormItem>
+          {getFieldDecorator('userName', {
+            rules: [{ required: true, message: 'Please input your username!' }],
+          })(
+            <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Username" />
+          )}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator('password', {
+            rules: [{ required: true, message: 'Please input your Password!' }],
+          })(
+            <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
+          )}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator('remember', {
+            valuePropName: 'checked',
+            initialValue: true,
+          })(
+            <Checkbox>Remember me</Checkbox>
+          )}
+          <a className="login-form-forgot" href="">Forgot password</a>
+          <Button type="primary" htmlType="submit" className="login-form-button">
+            Log in
+          </Button>
+          Or <a href="">register now!</a>
+        </FormItem>
+      </Form>
+    );
   }
 }
+
+const Login = Form.create()(NormalLoginForm);
+
+export default Login;

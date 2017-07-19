@@ -20,5 +20,11 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001",
+  "devDependencies": {
+    "babel-plugin-import": "^1.2.1"
+  },
+  "babel": {
+    "plugins": [["import", {"libraryName": "antd", "style": true}]]
+  }
 }
