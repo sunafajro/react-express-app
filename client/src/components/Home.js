@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 // импортируем экшены
-import { postsFetchData } from '../actions/index'
+import { fetchPosts } from '../actions/index'
 
 class Home extends Component {
-  // подгружаем посты через экшен
   componentDidMount() {
-    this.props.fetchData('/posts');
+    this.props.fetchPosts();
   }
 
   render() {
-    if (this.props.hasErrored) {
+
+    if (this.props.err) {
       return <div className="card-panel red">Sorry! There was an error loading the posts</div>;
     }
 
-    if (this.props.isLoading) {
+    if (this.props.postsLoading) {
       return (
           <div className="preloader-wrapper active">
             <div className="spinner-layer spinner-red-only">
@@ -34,29 +35,25 @@ class Home extends Component {
     return (
       <div className="Home">
         <h1>Last posts:</h1>
-        { this.props.posts.map(post =>
+        {this.props.posts.map(post =>
           <Card key={ post.id }>
             <CardTitle title={ post.title } />
             <CardText>{ post.body }</CardText>
           </Card>
-        ) }
+        )}
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        posts: state.posts,
-        hasErrored: state.itemsHasErrored,
-        isLoading: state.itemsIsLoading
-    };
-};
+const mapStateToProps = state => ({
+  posts: state.postsState.posts,
+  err: state.postsState.err,
+  postsLoading: state.postsState.postsLoading
+});
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchData: (url) => dispatch(postsFetchData(url))
-    };
-};
+const mapDispatchToProps = dispatch => bindActionCreators({
+  fetchPosts
+}, dispatch);
 
 export default connect(mapStateToProps,mapDispatchToProps)(Home);

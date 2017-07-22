@@ -1,21 +1,22 @@
 import React, {Component} from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import FlatButton from 'material-ui/FlatButton';
 
-export default class GuestMenu extends Component {
-  constructor() {
-    super();
+class GuestMenu extends Component {
 
-    this.handleButton = this.handleButton.bind(this);
-  }
   static muiName = 'FlatButton';
-
-  handleButton() {
-    //this.context.router.push('/login');
-  }
 
   render() {
     return (
-      <FlatButton label="Login" onClick={ this.handleButton} />
+      <FlatButton label="Login" onClick={ this.props.goToLoginPage } />
     );
   }
 }
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  goToLoginPage: () => push('/login')
+}, dispatch);
+
+export default connect(null, mapDispatchToProps)(GuestMenu);

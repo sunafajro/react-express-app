@@ -1,32 +1,57 @@
 import { combineReducers } from 'redux'
+import { routerReducer } from 'react-router-redux'
 import {
-  POSTS_HAS_ERRORED, POSTS_IS_LOADING, POSTS_FETCH_DATA_SUCCESS
+  APP_LOGIN, APP_LOGOUT, FETCH_POSTS, FETCH_POSTS_FAILED, FETCH_POSTS_SUCCESS
 } from '../actions/index'
 
-function postsHasErrored(state = false, action) {
-  switch (action.type) {
-    case POSTS_HAS_ERRORED:
-      return action.hasErrored;
+const globalInitialState = {
+  isGuest: true
+}
 
+const postsInitialState = {
+  postsLoading: false,
+  posts: [],
+  err: null
+}
+
+const appState = (state = globalInitialState, action) => {
+  switch (action.type) {
+    case APP_LOGIN:
+      return {
+        ...state,
+        isGuest: action.isGuest
+      }
+    case APP_LOGOUT:
+      return {
+        ...state,
+        isGuest: action.isGuest
+      }
     default:
-      return state;
+    return state;
   }
 }
 
-function postsIsLoading(state = false, action) {
+const postsState = (state = postsInitialState, action) => {
   switch (action.type) {
-    case POSTS_IS_LOADING:
-      return action.isLoading;
-
-    default:
-      return state;
-  }
-}
-
-function posts(state = [], action) {
-  switch (action.type) {
-    case POSTS_FETCH_DATA_SUCCESS:
-      return action.posts;
+    case FETCH_POSTS:
+      return {
+        ...state,
+        postsLoading: true
+      }
+    case FETCH_POSTS_SUCCESS:
+      return {
+        ...state,
+        postsLoading: false,
+        posts: action.posts,
+        err: null
+      }
+    case FETCH_POSTS_FAILED:
+      return {
+        ...state,
+        postsLoading: false,
+        posts: [],
+        err: action.err
+      }
 
     default:
       return state;
@@ -34,7 +59,7 @@ function posts(state = [], action) {
 }
 
 export default combineReducers({
-  postsHasErrored,
-  postsIsLoading,
-  posts
-});
+  routing: routerReducer,
+  appState,
+  postsState
+})
