@@ -1,55 +1,60 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
-const FormItem = Form.Item;
+// const FormItem = Form.Item;
 
-class NormalLoginForm extends Component {
+class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      username: '',
+      password: ''
+    }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
-    });
+    this.handleButton = this.handleButton.bind(this);
+    this.handleUsernameField = this.handleUsernameField.bind(this);
+    this.handlePasswordField = this.handlePasswordField.bind(this);
+  }
+
+  handleUsernameField(event) {
+    let val = event.target.value;
+    this.setState({ username: val});
+  }
+
+  handlePasswordField(event) {
+    let val = event.target.value;
+    this.setState({ password: val});
+  }
+
+  handleButton(event) {
+    console.log('Button pressed');
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
+
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
-        <FormItem>
-          {getFieldDecorator('userName', {
-            rules: [{ required: true, message: 'Please input your username!' }],
-          })(
-            <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Username" />
-          )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }],
-          })(
-            <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
-          )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator('remember', {
-            valuePropName: 'checked',
-            initialValue: true,
-          })(
-            <Checkbox>Remember me</Checkbox>
-          )}
-          <a className="login-form-forgot" href="">Forgot password</a>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            Log in
-          </Button>
-          Or <a href="">register now!</a>
-        </FormItem>
-      </Form>
+      <div className="LoginForm">
+        <h3>Login Form</h3>
+          <TextField
+            hintText="Введите имя пользователя..."
+            value={this.state.username}
+            floatingLabelText="Username"
+            onChange={ this.handleUsernameField }
+          /><br />
+          <TextField
+            hintText="Введите пароль..."
+            value={this.state.password}
+            floatingLabelText="Password"
+            type="password"
+            onChange={ this.handlePasswordField }
+          /><br />
+          <RaisedButton label="Login" onClick={ this.handleButton } />
+      </div>
     );
   }
 }
 
-const Login = Form.create()(NormalLoginForm);
+// const Login = Form.create()(NormalLoginForm);
 
 export default Login;

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import {
   POSTS_HAS_ERRORED, POSTS_IS_LOADING, POSTS_FETCH_DATA_SUCCESS
-} from '../actions'
+} from '../actions/index'
 
 function postsHasErrored(state = false, action) {
   switch (action.type) {

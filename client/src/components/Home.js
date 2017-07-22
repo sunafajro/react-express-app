@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {Card, CardTitle, CardText} from 'material-ui/Card';
 // импортируем экшены
 import { postsFetchData } from '../actions/index'
 
@@ -34,10 +35,10 @@ class Home extends Component {
       <div className="Home">
         <h1>Last posts:</h1>
         { this.props.posts.map(post =>
-          <div key={ post.id }>
-            <h4>{ post.title }</h4>
-            <p>{ post.body }</p>
-          </div>
+          <Card key={ post.id }>
+            <CardTitle title={ post.title } />
+            <CardText>{ post.body }</CardText>
+          </Card>
         ) }
       </div>
     )
