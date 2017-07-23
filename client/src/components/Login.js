@@ -37,7 +37,7 @@ class Login extends Component {
 
   render() {
     if (!this.props.isGuest) {
-      return <Redirect push to="/" />;
+      return <Redirect to="/" />;
     } else {
       return (
         <div className="LoginForm">

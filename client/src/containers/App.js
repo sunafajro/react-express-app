@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom'
+import { bindActionCreators } from 'redux';
+import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import AppBar from 'material-ui/AppBar';
 import Home from '../components/Home';
 import Admin from '../components/Admin';
@@ -9,6 +11,11 @@ import Login from '../components/Login';
 import UserMenu from '../components/UserMenu';
 import GuestMenu from '../components/GuestMenu';
 
+const styles = {
+  title: {
+    cursor: 'pointer',
+  },
+};
 
 class App extends Component {
 
@@ -16,14 +23,15 @@ class App extends Component {
     return (
       <div>
         <AppBar
-          title="Title"
+          title={<span style={styles.title}>Личный кабинет</span>}
+          onTitleTouchTap={ this.props.handleClickOnTitle }
           iconElementRight={this.props.isGuest ? <GuestMenu /> : <UserMenu />}
-        />            
-        <Switch>
+        />
+        <Switch>      
+          <Route exact path='/admin' component={ Admin } />
+          <Route exact path='/users' component={ Users } />
+          <Route exact path='/login' component={ Login } />
           <Route exact path='/' component={ Home } />
-          <Route path='/admin' component={ Admin } />
-          <Route path='/users' component={ Users } />
-          <Route path='/login' component={ Login } />
         </Switch>
       </div>
     );
@@ -34,4 +42,8 @@ const mapStateToProps = state => ({
   isGuest: state.appState.isGuest
 });
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  handleClickOnTitle: () => push('/')
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

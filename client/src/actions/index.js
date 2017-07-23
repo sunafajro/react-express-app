@@ -8,8 +8,7 @@ export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS'
 export const appLogin = () => {
   return dispatch => {
       dispatch({
-        type: APP_LOGIN,
-        isGuest: false
+        type: APP_LOGIN
     });
   }
 }
@@ -17,8 +16,7 @@ export const appLogin = () => {
 export const appLogout = () => {
   return dispatch => {
       dispatch({
-        type: APP_LOGOUT,
-        isGuest: true
+        type: APP_LOGOUT
     });
   }
 }
@@ -56,10 +54,10 @@ export const fetchPostsSuccess = (posts) => {
 
 /* экшен сообщающий что при загрузке постов произошла ошибка */
 export const fetchPostsFailed = (err) => {
+  console.log(err);
   return dispatch => {
     dispatch({
-      type: FETCH_POSTS_FAILED,
-      posts: err    
+      type: FETCH_POSTS_FAILED 
     });
   };
 };

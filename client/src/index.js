@@ -12,12 +12,12 @@ injectTapEventPlugin();
 //import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
-  <MuiThemeProvider>
+<MuiThemeProvider> 
   <Provider store={store}>
-    <ConnectedRouter history={history}>      
-        <App store={store} />      
+    <ConnectedRouter history={history}>
+        <App />
     </ConnectedRouter>    
   </Provider>
-  </MuiThemeProvider>
+</MuiThemeProvider>
   , document.getElementById('root'));
 //registerServiceWorker();
