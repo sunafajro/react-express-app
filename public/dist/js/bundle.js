@@ -38647,11 +38647,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var styles = {
-  title: {
-    cursor: 'pointer'
-  }
-};
+// const styles = {
+//   title: {
+//     cursor: 'pointer',
+//   },
+// };
+// title={<span style={styles.title}>Личный кабинет</span>}
+// onTitleTouchTap={ this.props.handleClickOnTitle }
+// {this.props.isGuest ? <GuestMenu /> : <UserMenu />}
 
 var App = function (_Component) {
   _inherits(App, _Component);
@@ -38669,13 +38672,8 @@ var App = function (_Component) {
         'div',
         null,
         _react2.default.createElement(_AppBar2.default, {
-          title: _react2.default.createElement(
-            'span',
-            { style: styles.title },
-            '\u041B\u0438\u0447\u043D\u044B\u0439 \u043A\u0430\u0431\u0438\u043D\u0435\u0442'
-          ),
-          onTitleTouchTap: this.props.handleClickOnTitle,
-          iconElementRight: this.props.isGuest ? _react2.default.createElement(_GuestMenu2.default, null) : _react2.default.createElement(_UserMenu2.default, null)
+          title: '\u041B\u0438\u0447\u043D\u044B\u0439 \u043A\u0430\u0431\u0438\u043D\u0435\u0442',
+          iconElementRight: _react2.default.createElement(_GuestMenu2.default, null)
         }),
         _react2.default.createElement(
           _reactRouterDom.Switch,
@@ -38692,21 +38690,18 @@ var App = function (_Component) {
   return App;
 }(_react.Component);
 
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    isGuest: state.appState.isGuest
-  };
-};
+// const mapStateToProps = state => ({
+//   isGuest: state.appState.isGuest
+// });
 
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return (0, _redux.bindActionCreators)({
-    handleClickOnTitle: function handleClickOnTitle() {
-      return (0, _reactRouterRedux.push)('/');
-    }
-  }, dispatch);
-};
+// const mapDispatchToProps = dispatch => bindActionCreators({
+//   handleClickOnTitle: () => push('/')
+// }, dispatch);
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+
+exports.default = App;
 
 /***/ }),
 /* 429 */
