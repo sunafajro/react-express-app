@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import { appLogin } from '../actions/index'
+import { appLogin } from '../actions/index';
 
-// const FormItem = Form.Item;
-
-class Login extends Component {
+class Login extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -16,7 +12,7 @@ class Login extends Component {
       password: ''
     }
 
-    // this.handleButton = this.handleButton.bind(this);
+    this.handleButton = this.handleButton.bind(this);
     this.handleUsernameField = this.handleUsernameField.bind(this);
     this.handlePasswordField = this.handlePasswordField.bind(this);
   }
@@ -31,31 +27,39 @@ class Login extends Component {
     this.setState({ password: val});
   }
 
-  // handleButton(event) {
-  //   console.log('Button pressed');
-  // }
+  handleButton(event) {
+    this.props.appLogin();
+  }
 
   render() {
     if (!this.props.isGuest) {
       return <Redirect to="/" />;
     } else {
       return (
-        <div className="LoginForm">
-          <h3>Login Form</h3>
-            <TextField
-              hintText="Введите имя пользователя..."
-              value={this.state.username}
-              floatingLabelText="Username"
+        <div className="col-sm-6">
+          <div className="form-group">
+            <label htmlFor="username">Логин</label>
+            <input
+              type="text"
+              className="form-control"
+              id="username"
+              placeholder="Введите имя пользователя..."
+              value={ this.state.username }
               onChange={ this.handleUsernameField }
-            /><br />
-            <TextField
-              hintText="Введите пароль..."
-              value={this.state.password}
-              floatingLabelText="Password"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Пароль</label>
+            <input
               type="password"
+              className="form-control"
+              id="password"
+              placeholder="Введите пароль..."
+              value={ this.state.password }              
               onChange={ this.handlePasswordField }
-            /><br />
-            <RaisedButton label="Login" onClick={ this.props.appLogin } />
+            />
+          </div>
+          <button type="submit" className="btn btn-default" onClick={ this.handleButton }>Войти</button>
         </div>
       );
     }

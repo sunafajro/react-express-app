@@ -1,44 +1,46 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {Card, CardTitle, CardText} from 'material-ui/Card';
-import CircularProgress from 'material-ui/CircularProgress';
+import { Redirect } from 'react-router';
 
 // импортируем экшены
 import { fetchPosts } from '../actions/index'
 
-class Home extends Component {
+class Home extends React.Component {
 
   componentDidMount() {
     this.props.fetchPosts();
   }
 
   render() {
-    return (
-      <div className="Home">
-        <h1>Last posts:</h1>
-        { this.props.err ? 
-          <Card>
-            <CardTitle title="Oops!" />
-            <CardText>Something went wrong!</CardText>
-          </Card> : '' }
+    if (this.props.isGuest) {
+      return <Redirect to="/login" />;
+    } else {
+      return (
+        <div className="Home">
+          <h3>Последние новости:</h3>
+          { this.props.err ? <div className="alert alert-warning" role="alert"><strong>Ошибка! Что то пошло не так!</strong></div>: '' }
 
-        { this.props.postsLoading ? <CircularProgress /> : '' }
-    
-        { 
-          this.props.posts.map(post =>
-          <Card key={ post.id }>
-            <CardTitle title={ post.title } />
-            <CardText>{ post.body }</CardText>
-          </Card>
-          )
-        }
-      </div>
-    )
+          { this.props.postsLoading ? '' : '' }
+      
+          { 
+            this.props.posts.map(post =>
+            <div className="panel panel-primary" key={ post.id }>
+              <div className="panel-heading">
+                <h3 className="panel-title">{ post.title }</h3>
+              </div>
+              <div className="panel-body">{ post.body }</div>
+            </div>
+            )
+          }
+        </div>
+      )
+    }
   }
 }
 
 const mapStateToProps = state => ({
+  isGuest: state.appState.isGuest,
   posts: state.appState.posts,
   err: state.appState.err,
   postsLoading: state.appState.postsLoading
