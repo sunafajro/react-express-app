@@ -9,7 +9,9 @@ import { fetchPosts } from '../actions/index'
 class Home extends React.Component {
 
   componentDidMount() {
-    this.props.fetchPosts();
+    if (!this.props.isGuest) {
+      this.props.fetchPosts();
+    }
   }
 
   render() {
@@ -30,6 +32,7 @@ class Home extends React.Component {
                 <h3 className="panel-title">{ post.title }</h3>
               </div>
               <div className="panel-body">{ post.body }</div>
+              <div className="panel-footer">{ post.date }. { post.author }</div>
             </div>
             )
           }

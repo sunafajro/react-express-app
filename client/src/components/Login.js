@@ -2,33 +2,23 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import md5 from 'js-md5';
 import { appLogin } from '../actions/index';
 
 class Login extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      username: '',
-      password: ''
+
+  state = {
+    username: '',
+    password: ''
+  }
+
+  handleButton = () => {
+    if (this.state.username !== '' && this.state.password !== '') {
+      this.props.appLogin({
+        login: this.state.username,
+        pass: md5(this.state.password)
+      });
     }
-
-    this.handleButton = this.handleButton.bind(this);
-    this.handleUsernameField = this.handleUsernameField.bind(this);
-    this.handlePasswordField = this.handlePasswordField.bind(this);
-  }
-
-  handleUsernameField(event) {
-    let val = event.target.value;
-    this.setState({ username: val});
-  }
-
-  handlePasswordField(event) {
-    let val = event.target.value;
-    this.setState({ password: val});
-  }
-
-  handleButton(event) {
-    this.props.appLogin();
   }
 
   render() {
@@ -45,7 +35,7 @@ class Login extends React.Component {
               id="username"
               placeholder="Введите имя пользователя..."
               value={ this.state.username }
-              onChange={ this.handleUsernameField }
+              onChange={ (e) => this.setState({ username: e.nativeEvent.target.value }) }
             />
           </div>
           <div className="form-group">
@@ -56,7 +46,7 @@ class Login extends React.Component {
               id="password"
               placeholder="Введите пароль..."
               value={ this.state.password }              
-              onChange={ this.handlePasswordField }
+              onChange={ (e) => this.setState({ password: e.nativeEvent.target.value }) }
             />
           </div>
           <button type="submit" className="btn btn-default" onClick={ this.handleButton }>Войти</button>

@@ -1,9 +1,17 @@
 import {
-  APP_LOGIN, APP_LOGOUT, FETCH_POSTS, FETCH_POSTS_FAILED, FETCH_POSTS_SUCCESS
+  APP_LOGIN, 
+  APP_LOGIN_SUCCESS,
+  APP_LOGIN_FAILED,
+  APP_LOGOUT, 
+  FETCH_POSTS, 
+  FETCH_POSTS_FAILED, 
+  FETCH_POSTS_SUCCESS
 } from '../actions/index'
 
 const appInitialState = {
   isGuest: true,
+  userInfo: [],
+  loginPoccess: false,
   postsLoading: false,
   posts: [],
   err: false
@@ -14,7 +22,20 @@ export default (state = appInitialState, action) => {
     case APP_LOGIN:
       return {
         ...state,
-        isGuest: false
+        loginPoccess: true
+      }
+    case APP_LOGIN_SUCCESS:
+      return {
+        ...state,
+        isGuest: false,
+        loginPoccess: false,
+        userInfo: action.response
+      }
+    case APP_LOGIN_FAILED:
+      return {
+        ...state,
+        loginPoccess: false,
+        err: action.err
       }
     case APP_LOGOUT:
       return {
