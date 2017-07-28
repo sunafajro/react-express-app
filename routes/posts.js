@@ -4,11 +4,14 @@ var db = require('../db');
 const GET_LAST_POSTS = require('../db/queries/getlastposts');
 
 router.get('/', function(req, res, next) {
-  db.query(
-    GET_LAST_POSTS, { replacements: { type: 12, one: 1 }, type: db.QueryTypes.SELECT }
-  ).then(posts => {
-    res.json({ posts });
-  });
+  db()
+    .then(db => {
+        db.query(
+          GET_LAST_POSTS, { replacements: { type: 12, one: 1 }, type: db.QueryTypes.SELECT }
+        ).then(posts => {
+          res.json({ posts });
+        });
+    });
 });
 
 module.exports = router;
@@ -70,21 +73,3 @@ module.exports = router;
     // .catch(err => {
     //   console.error('Подключение не удалось: ', err);
     // });
-
-  // res.json([
-  //   {
-  //     id: 1,
-  //     title: 'Sample #1 title',
-  //     body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi ea non, ullam unde veritatis, voluptas aut exercitationem quisquam, pariatur et qui enim illo perspiciatis minus quasi iste ad voluptatibus! Iste.'
-  //   }, 
-  //   {
-  //     id: 2,
-  //     title: "Sample #2 title",
-  //     body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi ea non, ullam unde veritatis, voluptas aut exercitationem quisquam, pariatur et qui enim illo perspiciatis minus quasi iste ad voluptatibus! Iste.'
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Sample #3 title",
-  //     body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi ea non, ullam unde veritatis, voluptas aut exercitationem quisquam, pariatur et qui enim illo perspiciatis minus quasi iste ad voluptatibus! Iste.'
-  //   },
-  // ]);
